@@ -17,6 +17,8 @@ public class Product {
      * @param rating rating of product out of 5
      */
 	public Product(String name, String category, int price, float rating){
+		
+		//TODO
 	}
 	
 	/** 
@@ -24,7 +26,7 @@ public class Product {
      * @return the name
      */
 	public String getName(){
-		return null;
+		return this.name;
 	}
 	
 	/** 
@@ -32,7 +34,7 @@ public class Product {
      * @return the category
      */
 	public String getCategory(){
-		return null;
+		return this.category;
 	}
 	
 	/** 
@@ -40,7 +42,7 @@ public class Product {
      * @return the price
      */
 	public int getPrice(){
-		return 0;
+		return this.price;
 	}
 	
 	/** 
@@ -48,7 +50,7 @@ public class Product {
      * @return the rating
      */
 	public float getRating(){
-		return 0;
+		return this.rating;
 	}
 	
 	/** 
@@ -56,6 +58,7 @@ public class Product {
      */
 	public String toString(){
 		return null;
+		//TODO
 	}
 
 }
