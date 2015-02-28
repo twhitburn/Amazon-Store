@@ -19,8 +19,25 @@ public class Test {
 			System.out.println("Oops, you broke it.");
 		}
 		
+		list.remove(1);
+		list.remove(0);
+		list.remove(2);
+		
+		if(list.contains(1)){
+			System.out.println("Contains 1");
+		}
+		if(list.contains(4)){
+			System.out.println("Contains 4");
+		}
+		
+		list.add(0,0);
+		int asdf = list.get(1);
+		System.out.println(asdf);
+		asdf = list.get(0);
+		System.out.println(asdf);
+		
 		int i = 0;
-	
+		
 		
 	
 	

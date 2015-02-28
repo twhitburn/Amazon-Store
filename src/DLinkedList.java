@@ -12,7 +12,12 @@ public class DLinkedList<E> implements ListADT<E> {
 		numItems = 0;
 	}
 
-
+	/**
+	 * Adds item to the end of the List.
+	 * 
+	 * @param item the item to add
+	 * @throws IllegalArgumentException if item is null 
+	 */
 	@Override
 	public void add(E item) {
 
@@ -37,6 +42,16 @@ public class DLinkedList<E> implements ListADT<E> {
 
 	}
 
+	/**
+	 * Adds item at position pos in the List, moving the items originally in 
+	 * positions pos through size() - 1 one place to the right to make room.
+	 * 
+	 * @param pos the position at which to add the item
+	 * @param item the item to add
+	 * @throws IllegalArgumentException if item is null 
+	 * @throws IndexOutOfBoundsException if pos is less than 0 or greater 
+	 * than size()
+	 */
 	@Override
 	public void add(int pos, E item) {
 		if ((item == null) || (pos < 0) || (pos > numItems)) {
@@ -84,24 +99,64 @@ public class DLinkedList<E> implements ListADT<E> {
 
 	}
 
+	/**
+	 * Returns true iff item is in the List (i.e., there is an item x in the List 
+	 * such that x.equals(item))
+	 * 
+	 * @param item the item to check
+	 * @return true if item is in the List, false otherwise
+	 */
 	@Override
 	public boolean contains(E item) {
 		if (item == null) throw new IllegalArgumentException();
-		return false;
-		//TODO
 
+		Listnode<E> temp = head; 
+
+		//Special case: empty list
+		if(numItems == 0){
+			return false;
+		}
+		//General case:
+		else {
+			do {
+				if (temp.getData().equals(item)) {
+					return true;
+				}
+				temp = temp.getNext();
+			} while (temp != null);
+		}
+		return false;
 
 	}
 
+	/**
+	 * Returns the item at position pos in the List.
+	 * 
+	 * @param pos the position of the item to return
+	 * @return the item at position pos
+	 * @throws IndexOutOfBoundsException if pos is less than 0 or greater than
+	 * or equal to size()
+	 */
 	@Override
 	public E get(int pos) {
 
 		if ((pos < 0) || (pos > numItems-1)) throw new IllegalArgumentException();
 
-		// TODO 
-		return null;
+		Listnode<E> temp = head;
+
+		for (int i = 0; i < pos; i++) {
+			temp = temp.getNext();
+		}
+
+		return temp.getData();
+
 	}
 
+	/**
+	 * Returns true iff the List is empty.
+	 * 
+	 * @return true if the List is empty, false otherwise
+	 */
 	@Override
 	public boolean isEmpty() {
 
@@ -110,16 +165,56 @@ public class DLinkedList<E> implements ListADT<E> {
 
 	}
 
+	/**
+	 * Removes and returns the item at position pos in the List, moving the items 
+	 * originally in positions pos+1 through size() - 1 one place to the left to 
+	 * fill in the gap.
+	 * 
+	 * @param pos the position at which to remove the item
+	 * @return the item at position pos
+	 * @throws IndexOutOfBoundsException if pos is less than 0 or greater than
+	 * or equal to size()
+	 */
 	@Override
 	public E remove(int pos) {
 
-		if ((pos < 0) || (pos > numItems-1)) throw new IllegalArgumentException();
+		if ((pos < 0) || (pos >= numItems)) throw new IllegalArgumentException();
 
+		Listnode<E> temp = null;
+		//special case: removing the first item
+		if(pos == 0){
+			temp = head;
+			head.getNext().setPrev(null);
+			head = head.getNext();
+		}
 
-		// TODO 
-		return null;
+		//special case: removing the last item
+		else if (pos == numItems-1){
+			temp = tail;
+			tail.getPrev().setNext(null);
+			tail = tail.getPrev();
+		}
+
+		//general case
+		else {
+			temp = head;
+			for (int i = 0; i < pos; i++){
+				temp = temp.getNext();
+			}
+			temp.getNext().setPrev(temp.getPrev());
+			temp.getPrev().setNext(temp.getNext());
+
+		}
+
+		numItems--;
+		return temp.getData();
 	}
 
+	/**
+	 * Returns the number of items in the List.
+	 * 
+	 * @return the number of items in the List
+	 */
 	@Override
 	public int size() {
 
