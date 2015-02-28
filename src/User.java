@@ -22,8 +22,8 @@ public class User {
 	 * @param credit amount of credit the user had in $ 
 	 */
 	public User(String username, String passwd, int credit){
-		if ((username == null) || (passwd == null) || (credit == null)) {
-			throw new IllegalArgumentException;
+		if ((username == null) || (passwd == null)) {
+			throw new IllegalArgumentException();
 		}
 
 		this.username = username;
