@@ -5,11 +5,26 @@ public class Test {
 		DLinkedList<Integer> list = new DLinkedList<Integer>();
 		
 		if (list.isEmpty()) System.out.println("Empty");
+		list.add(0);
 		list.add(1);
 		list.add(2);
-		list.add(3);
 		if (!list.isEmpty()) System.out.println("Not Empty");
-	int i = 0;
+	
+		list.add(3,3);
+		list.add(1,10);
+		try {
+			list.add(123, 3);
+		}
+		catch (IllegalArgumentException ex) {
+			System.out.println("Oops, you broke it.");
+		}
+		
+		int i = 0;
+	
+		
+	
+	
+	
 	}
 	
 
