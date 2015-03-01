@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
@@ -13,7 +15,7 @@ public class AmazonStore {
 
 
 	//main method
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException {
 
 
 		//Populate the two lists using the input files: Products.txt User1.txt User2.txt ... UserN.txt
@@ -56,26 +58,58 @@ public class AmazonStore {
 	}
 
 	/**
-	 * Tries to login for the given credentials. Updates the currentUser if successful login
+	 * Tries to login for the given credentials. Updates the currentUser if 
+	 * successful login
 	 * 
 	 * @param username name of user
 	 * @param passwd password of user
 	 * @returns the currentUser 
 	 */
 	public static User login(String username, String passwd){
+		if ((username == null) || (passwd == null)){
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < users.size(); i++){
+			if (users.get(i).checkLogin(username, passwd)){
+				currentUser = users.get(i);
+				return currentUser;
+			}
+		}
 		return null;
 	}
 
 	/**
 	 * Reads the specified file to create and load products into the store.
 	 * Every line in the file has the format: <NAME>#<CATEGORY>#<PRICE>#<RATING>
-	 * Create new products based on the attributes specified in each line and insert them into the products list
+	 * Create new products based on the attributes specified in each line and 
+	 * insert them into the products list
 	 * Order of products list should be the same as the products in the file
 	 * For any problem in reading the file print: 'Error: Cannot access file'
 	 * 
 	 * @param fileName name of the file to read
+	 * @throws FileNotFoundException 
 	 */
-	public static void loadProducts(String fileName){
+	public static void loadProducts(String fileName) 
+			throws FileNotFoundException {
+		Scanner fileIn = null;
+		try{
+			fileIn = new Scanner(new File(fileName));
+			String delims = "[#]";
+			Product tempProduct;
+			while (fileIn.hasNext()){
+				String s = fileIn.nextLine();
+				String[] tokens = s.split(delims);
+				String name = tokens[0];
+				String category = tokens[1];
+				int price = Integer.valueOf(tokens[2]);
+				float rating = Float.parseFloat(tokens[3]);
+				tempProduct =  new Product(name, category, price, rating);
+				products.add(tempProduct);		
+			}
+			fileIn.close();
+		} catch (FileNotFoundException ex){
+			System.out.println("Error: Cannot access file");
+		}
 	}
 
 	/**
@@ -85,29 +119,56 @@ public class AmazonStore {
 	 * For any problem in reading the file print: 'Error: Cannot access file'
 	 * 
 	 * @param fileName name of the file to read
+	 * @throws FileNotFoundException 
 	 */
-	public static void loadUser(String fileName){
+	public static void loadUser(String fileName) throws FileNotFoundException{
+		Scanner fileIn = null;
+		try{
+			fileIn = new Scanner(new File(fileName));
+			String delims1 = "[#]";
+			User tempUser;
+			//Read in first line for creating user.
+			String userInfo = fileIn.nextLine();
+			String[] tokens1 = userInfo.split(delims1);
+			String username = tokens1[0];
+			String passwd = tokens1[1];
+			int credit = Integer.valueOf(tokens1[2]);
+			tempUser = new User(username, passwd, credit);
+			//Read the products for user wishlist.
+
+			while(fileIn.hasNext()){
+				String productName = fileIn.nextLine();
+				for (int i = 0; i < products.size(); i++){
+					if (products.get(i).getName().equals(productName)){
+						tempUser.addToWishList(products.get(i));
+					}
+				}
+
+			}
+		} catch (FileNotFoundException ex){
+			System.out.println("Error: Cannot access file");
+		}
 	}
 
 	/**
 	 * See sample outputs
-     * Prints the entire store inventory formatted by category
-     * The input text file for products is already grouped by category, use the same order as given in the text file 
-     * format:
-     * <CATEGORY1>
-     * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
-     * ...
-     * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
-     * 
-     * <CATEGORY2>
-     * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
-     * ...
-     * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
-     */
+	 * Prints the entire store inventory formatted by category
+	 * The input text file for products is already grouped by category, use the same order as given in the text file 
+	 * format:
+	 * <CATEGORY1>
+	 * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
+	 * ...
+	 * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
+	 * 
+	 * <CATEGORY2>
+	 * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
+	 * ...
+	 * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
+	 */
 	public static void printByCategory(){
 	}
 
-	
+
 	/**
 	 * Interacts with the user by processing commands
 	 * 
