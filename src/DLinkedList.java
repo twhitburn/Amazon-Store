@@ -198,7 +198,7 @@ public class DLinkedList<E> implements ListADT<E> {
 		//general case
 		else {
 			temp = head;
-			for (int i = 0; i < pos; i++){
+			for (int i = 0; i < pos; i++) {
 				temp = temp.getNext();
 			}
 			temp.getNext().setPrev(temp.getPrev());
