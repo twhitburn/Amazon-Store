@@ -1,8 +1,10 @@
+import java.util.Iterator;
 import java.util.Random;
 import java.io.PrintStream;
 
 /**
- * The User class uses DLinkedList to build a price ordered list called 'wishlist' of products 
+ * The User class uses DLinkedList to build a price ordered list called 
+ * 'wishlist' of products 
  * Products with higher Price fields should come earlier in the list.
  */
 public class User {
@@ -15,21 +17,22 @@ public class User {
 	private ListADT<Product> wishList;
 
 	/**
-	 * Constructs a User instance with a name, password, credit and an empty wishlist. 
+	 * Constructs a User instance with a name, password, credit and an empty
+	 *  wishlist. 
 	 * 
 	 * @param username name of user
 	 * @param passwd password of user
 	 * @param credit amount of credit the user had in $ 
 	 */
 	public User(String username, String passwd, int credit){
-		if ((username == null) || (passwd == null)) {
+		if ((username == null) || (passwd == null) || (credit < 0)) {
 			throw new IllegalArgumentException();
 		}
 
 		this.username = username;
 		this.passwd = passwd;
 		this.credit = credit;
-		this.wishlist = new DLinkedList<Product>();
+		this.wishList = new DLinkedList<Product>();
 	}
 
 	/**
@@ -51,12 +54,16 @@ public class User {
 
 	/**
 	 * Adds a product to the user's wishlist. 
-	 * Maintain the order of the wishlist from highest priced to lowest priced products.
+	 * Maintain the order of the wishlist from highest priced to lowest priced 
+	 * products.
 	 * @param product the Product to add
 	 */
-	public void addToWishList(Product product){
+	public void addToWishList(Product product) {
 
-	//TODO
+	if (product == null) throw new IllegalArgumentException();
+	
+	wishList.add(product);
+		
 	}
 
 	/**
@@ -65,15 +72,25 @@ public class User {
 	 * @param productName the name of the product to remove
 	 * @return the product on success, null if no such product found
 	 */
-	public Product removeFromWishList(String productName){
-		return null;
+	public Product removeFromWishList(String productName) {
 		
-		//TODO
+		if (productName == null) throw new IllegalArgumentException();
+		
+		for (int i = 0; i < wishList.size(); i++) {
+			
+			if (wishList.get(i).getName().equals(productName)) {
+				return wishList.remove(i);
+			}
+		}
+						
+		return null;
 	}
 
 	/**
-	 * Print each product in the user's wishlist in its own line using the PrintStream object passed in the argument
-	 * @param printStream The printstream object on which to print out the wishlist
+	 * Print each product in the user's wishlist in its own line using the 
+	 * PrintStream object passed in the argument
+	 * @param printStream The printstream object on which to print out the 
+	 * wishlist
 	 */
 	public void printWishList(PrintStream printStream){
 		//TODO
