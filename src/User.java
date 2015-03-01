@@ -93,7 +93,11 @@ public class User {
 	 * wishlist
 	 */
 	public void printWishList(PrintStream printStream){
-		//TODO
+		//TODO is this correct?
+		for (int i = 0; i < wishList.size(); i++) {
+			printStream.println(wishList.get(i).toString());
+		}
+		
 	}
 
 	/**
@@ -106,9 +110,23 @@ public class User {
 	 * @return true if successfully bought, false if product not found 
 	 * @throws InsufficientCreditException if price > credit 
 	 */
-	public boolean buy(String productName) throws InsufficientCreditException{
+	public boolean buy(String productName) throws InsufficientCreditException {
+		
+		for (int i = 0; i < wishList.size(); i++) {
+			if (wishList.get(i).equals(productName)) {
+				if (wishList.get(i).getPrice() <= credit) {
+					credit -= wishList.get(i).getPrice();
+					wishList.remove(i);
+					return true;
+				}
+				else {
+					throw new InsufficientCreditException();
+				}
+			}
+		}
+		
+		
 		return false;
-		//TODO
 	}
 
 	/** 
