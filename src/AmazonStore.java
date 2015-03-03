@@ -18,14 +18,16 @@ public class AmazonStore {
 	public static void main(String args[]) throws FileNotFoundException {
 
 
-		//Populate the two lists using the input files: Products.txt User1.txt User2.txt ... UserN.txt
+		//Populate the two lists using the input files: Products.txt User1.txt 
 		if (args.length < 2) {
-			System.out.println("Usage: java AmazonStore [PRODUCT_FILE] [USER1_FILE] [USER2_FILE] ...");
+			System.out.println("Usage: java AmazonStore [PRODUCT_FILE] "
+					+ "[USER1_FILE] [USER2_FILE] ...");
 			System.exit(0);
 		}
 
 		//load store products
 		loadProducts(args[0]);
+		printByCategory();
 
 		//load users one file at a time
 		for(int i=1; i<args.length; i++)
@@ -50,7 +52,8 @@ public class AmazonStore {
 			else
 				System.out.println("Incorrect username or password");
 
-			System.out.println("Enter 'exit' to exit program or anything else to go back to login");
+			System.out.println("Enter 'exit' to exit program or anything else "
+					+ "to go back to login");
 			if(stdin.nextLine().equals("exit"))
 				done = true;
 		}
@@ -166,6 +169,22 @@ public class AmazonStore {
 	 * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
 	 */
 	public static void printByCategory(){
+		String tempCate = null;
+		String tempName = null;
+		int tempPrice = 0;
+		float tempRating = 0;
+		for (int i = 0; i < products.size(); i++){
+			String s = products.get(i).getCategory();
+			if (s == tempCate) {
+				tempCate = products.get(i).getCategory();
+				System.out.println("\n" + tempCate);
+			}
+			tempName = products.get(i).getName();
+			tempPrice = products.get(i).getPrice();
+			tempRating = products.get(i).getRating();
+			System.out.println(tempName + " [Price:$" + tempPrice + " Rating:"
+					+ tempRating + " stars]");
+		}
 	}
 
 
