@@ -134,8 +134,8 @@ public class AmazonStore {
 			String passwd = tokens1[1];
 			int credit = Integer.valueOf(tokens1[2]);
 			tempUser = new User(username, passwd, credit);
+			users.add(tempUser);
 			//Read the products for user wishlist.
-
 			while(fileIn.hasNext()){
 				String productName = fileIn.nextLine();
 				for (int i = 0; i < products.size(); i++){
