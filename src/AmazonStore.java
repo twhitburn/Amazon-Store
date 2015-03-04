@@ -175,7 +175,7 @@ public class AmazonStore {
 		float tempRating = 0;
 		for (int i = 0; i < products.size(); i++){
 			String s = products.get(i).getCategory();
-			if (s == tempCate) {
+			if (s != tempCate) {
 				tempCate = products.get(i).getCategory();
 				System.out.println("\n" + tempCate);
 			}
