@@ -27,7 +27,6 @@ public class AmazonStore {
 
 		//load store products
 		loadProducts(args[0]);
-		printByCategory();
 
 		//load users one file at a time
 		for(int i=1; i<args.length; i++)
@@ -173,10 +172,10 @@ public class AmazonStore {
 		String tempName = null;
 		int tempPrice = 0;
 		float tempRating = 0;
-		for (int i = 0; i < products.size(); i++){
+		for (int i = 0; i < products.size(); i++) {
 			String s = products.get(i).getCategory();
-			if (s != tempCate) {
-				tempCate = products.get(i).getCategory();
+			if (!s.equals(tempCate)) {
+				tempCate = s;
 				System.out.println("\n" + tempCate);
 			}
 			tempName = products.get(i).getName();
@@ -212,9 +211,24 @@ public class AmazonStore {
 				}
 				switch(commands[0].charAt(0)){
 				case 'v':
+					if (commands[1].equals("all")){
+						printByCategory();
+					}
+					else if (commands[1].equals("wishlist")){
+						if (currentUser == null) {
+							System.out.println("No user logged in. Log in first.");
+						}
+						//TODO call printWishList
+					}
+					else if (commands[1].equals("instock")){
+						for (int i = 0; i < inStock.size(); i++){
+							
+						}
+					}
 					break;
 
 				case 's':
+					
 					break;
 
 				case 'a':
