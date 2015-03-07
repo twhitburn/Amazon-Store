@@ -85,6 +85,7 @@ public class User {
 		for (int i = 0; i < wishList.size(); i++) {
 
 			if (wishList.get(i).getName().equals(productName)) {
+				System.out.println("Removed from wishlist");
 				return wishList.remove(i);
 			}
 		}

@@ -211,85 +211,110 @@ public class AmazonStore {
 				}
 				switch(commands[0].charAt(0)) {
 				case 'v':
-					if (commands[1].equals("all")) {
-						printByCategory();
-					}
-					else if (commands[1].equals("wishlist")) {
-						if (currentUser == null) {
-							System.out.println("No user logged in. Log in first.");
+					try {
+						if (commands.length != 2)
+							throw new IllegalArgumentException();
+						if (commands[1].equals("all")) {
+							printByCategory();
 						}
-						currentUser.printWishList(System.out);
+						else if (commands[1].equals("wishlist")) {
+							if (currentUser == null) {
+								System.out.println("No user logged in. Log in "
+										+ "first.");
+							}
+							currentUser.printWishList(System.out);
 
-					}
-					else if (commands[1].equals("instock")){
-						for (int i = 0; i < inStock.size(); i++){
-							System.out.println(inStock.get(i).toString());
 						}
+						else if (commands[1].equals("instock")){
+							for (int i = 0; i < inStock.size(); i++){
+								System.out.println(inStock.get(i).toString());
+							}
+						}
+					}catch(IllegalArgumentException ex) {
+						break;
 					}
 					break;
 
 				case 's':
-					if (commands[1] == null) {
-						throw new IllegalArgumentException();
-					}
-					String query = commands[1];
-					for (int i = 0; i < products.size(); i++) {
-						boolean flag1 = false;
-						String[] nameString = products.get(i).getName().split(" ");
-						for (int j = 0; j < nameString.length; j++) {
-							if (nameString[j].equals(query)){
-								flag1 = true;
-							}
+					try {
+						if (commands.length != 2)
+							throw new IllegalArgumentException();
+						if (commands[1] == null) {
+							throw new IllegalArgumentException();
 						}
-						if (flag1){
-							System.out.println(products.get(i).toString());
-						}		
+						String query = commands[1];
+						for (int i = 0; i < products.size(); i++) {
+							boolean flag1 = false;
+							String[] nameString = products.get(i).getName().split(" ");
+							for (int j = 0; j < nameString.length; j++) {
+								if (nameString[j].equals(query)){
+									flag1 = true;
+								}
+							}
+							if (flag1){
+								System.out.println(products.get(i).toString());
+							}		
+						}
+					}catch(IllegalArgumentException ex) {
+						break;
 					}
 					break;
-
 				case 'a':
-					if (commands[1] == null) {
-						throw new IllegalArgumentException();
-					}
-
-					String productName = commands[1];
-					boolean added = false;
-					for (int i = 0; i < products.size(); i++) {
-						if (products.get(i).getName().equals(productName)) {
-							currentUser.addToWishList(products.get(i));
-							added = true;
+					try {
+						if (commands.length != 2)
+							throw new IllegalArgumentException();
+						if (commands[1] == null) {
+							throw new IllegalArgumentException();
 						}
+
+						String productName = commands[1];
+						boolean added = false;
+						for (int i = 0; i < products.size(); i++) {
+							if (products.get(i).getName().equals(productName)) {
+								currentUser.addToWishList(products.get(i));
+								System.out.println("Added to wishlist");
+								added = true;
+							}
+						}
+						if (!added) System.out.println("Product not found.");
+					}catch(IllegalArgumentException ex) {
+						break;
 					}
-					if (!added) System.out.println("Product not found.");
 
 					break;
 
 				case 'r':
-					if (commands[1] == null) {
-						throw new IllegalArgumentException();
-					}
+					try {
+						if (commands.length != 2)
+							throw new IllegalArgumentException();
+						if (commands[1] == null) {
+							throw new IllegalArgumentException();
+						}
 
-					String productName2 = commands[1];
-					if ((currentUser.removeFromWishList(productName2)) == null) {
-						System.out.println("Product not found.");
+						String productName2 = commands[1];
+						if ((currentUser.removeFromWishList(productName2)) == null) {
+							System.out.println("Product not found.");
+						}
+					}catch(IllegalArgumentException ex) {
+						break;
 					}
-
 					break;
 
 				case 'b':
-					boolean bought = false;
-					int i = 0;
-					while ((!bought) && (i < inStock.size())) {
+
+
+					for (int i = 0; i < inStock.size(); i++) {
 						String productName3 = inStock.get(i).getName();
 
 						try {
 							if (currentUser.buy(productName3)) {
-								bought = true;
+								System.out.println("Bought " + productName3);
+
 							}
 						}catch (InsufficientCreditException ex) {
 							System.out.println("Insufficient funds for " + productName3);
 						}
-						i++;
+
 					}
 					break;
 
