@@ -119,7 +119,7 @@ public class User {
 	public boolean buy(String productName) throws InsufficientCreditException {
 
 		for (int i = 0; i < wishList.size(); i++) {
-			if (wishList.get(i).equals(productName)) {
+			if (wishList.get(i).getName().equals(productName)) {
 				if (wishList.get(i).getPrice() <= credit) {
 					credit -= wishList.get(i).getPrice();
 					wishList.remove(i);

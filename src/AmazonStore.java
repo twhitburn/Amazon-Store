@@ -268,16 +268,29 @@ public class AmazonStore {
 					if (commands[1] == null) {
 						throw new IllegalArgumentException();
 					}
-					
+
 					String productName2 = commands[1];
-					if ((currentUser.removeFromWishList(productName2).getName()) == null) {
+					if ((currentUser.removeFromWishList(productName2)) == null) {
 						System.out.println("Product not found.");
-						//TODO throws NullPointerException if product not found
 					}
-					
+
 					break;
 
 				case 'b':
+					boolean bought = false;
+					int i = 0;
+					while ((!bought) && (i < inStock.size())) {
+						String productName3 = inStock.get(i).getName();
+
+						try {
+							if (currentUser.buy(productName3)) {
+								bought = true;
+							}
+						}catch (InsufficientCreditException ex) {
+							System.out.println("Insufficient funds for " + productName3);
+						}
+						i++;
+					}
 					break;
 
 				case 'c':
