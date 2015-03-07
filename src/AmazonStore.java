@@ -18,9 +18,10 @@ public class AmazonStore {
 	public static void main(String args[]) throws FileNotFoundException {
 
 
-		//Populate the two lists using the input files: Products.txt User1.txt User2.txt ... UserN.txt
+		//Populate the two lists using the input files: Products.txt User1.txt 
 		if (args.length < 2) {
-			System.out.println("Usage: java AmazonStore [PRODUCT_FILE] [USER1_FILE] [USER2_FILE] ...");
+			System.out.println("Usage: java AmazonStore [PRODUCT_FILE] "
+					+ "[USER1_FILE] [USER2_FILE] ...");
 			System.exit(0);
 		}
 
@@ -50,7 +51,8 @@ public class AmazonStore {
 			else
 				System.out.println("Incorrect username or password");
 
-			System.out.println("Enter 'exit' to exit program or anything else to go back to login");
+			System.out.println("Enter 'exit' to exit program or anything else "
+					+ "to go back to login");
 			if(stdin.nextLine().equals("exit"))
 				done = true;
 		}
@@ -134,8 +136,8 @@ public class AmazonStore {
 			String passwd = tokens1[1];
 			int credit = Integer.valueOf(tokens1[2]);
 			tempUser = new User(username, passwd, credit);
+			users.add(tempUser);
 			//Read the products for user wishlist.
-
 			while(fileIn.hasNext()){
 				String productName = fileIn.nextLine();
 				for (int i = 0; i < products.size(); i++){
@@ -166,6 +168,22 @@ public class AmazonStore {
 	 * <NAME> [Price:$<PRICE> Rating:<RATING> stars]
 	 */
 	public static void printByCategory(){
+		String tempCate = null;
+		String tempName = null;
+		int tempPrice = 0;
+		float tempRating = 0;
+		for (int i = 0; i < products.size(); i++) {
+			String s = products.get(i).getCategory();
+			if (!s.equals(tempCate)) {
+				tempCate = s;
+				System.out.println("\n" + tempCate);
+			}
+			tempName = products.get(i).getName();
+			tempPrice = products.get(i).getPrice();
+			tempRating = products.get(i).getRating();
+			System.out.println(tempName + " [Price:$" + tempPrice + " Rating:"
+					+ tempRating + " stars]");
+		}
 	}
 
 
@@ -193,9 +211,40 @@ public class AmazonStore {
 				}
 				switch(commands[0].charAt(0)){
 				case 'v':
+					if (commands[1].equals("all")){
+						printByCategory();
+					}
+					else if (commands[1].equals("wishlist")){
+						if (currentUser == null) {
+							System.out.println("No user logged in. Log in first.");
+						}
+						currentUser.printWishList(System.out);
+						//TODO call printWishList
+					}
+					else if (commands[1].equals("instock")){
+						for (int i = 0; i < inStock.size(); i++){
+							System.out.println(inStock.get(i).toString());
+						}
+					}
 					break;
 
 				case 's':
+					if (commands[1] == null) {
+						throw new IllegalArgumentException();
+					}
+					String query = commands[1];
+					for (int i = 0; i < products.size(); i++) {
+						boolean flag1 = false;
+						String[] nameString = products.get(i).getName().split(" ");
+						for (int j = 0; j < nameString.length; j++) {
+							if (nameString[j].equals(query)){
+								flag1 = true;
+							}
+						}
+						if (flag1){
+							System.out.println(products.get(i).toString());
+						}		
+					}
 					break;
 
 				case 'a':

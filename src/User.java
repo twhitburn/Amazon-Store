@@ -60,10 +60,16 @@ public class User {
 	 */
 	public void addToWishList(Product product) {
 
-	if (product == null) throw new IllegalArgumentException();
-	
-	wishList.add(product);
-		
+		if (product == null) throw new IllegalArgumentException();
+		if (wishList.contains(product)){
+			for (int i = 0; i < wishList.size(); i++) {
+				if (product.equals(wishList.get(i))){
+					wishList.add(i, product);
+				}
+			}
+		}
+		wishList.add(product);
+
 	}
 
 	/**
@@ -73,16 +79,16 @@ public class User {
 	 * @return the product on success, null if no such product found
 	 */
 	public Product removeFromWishList(String productName) {
-		
+
 		if (productName == null) throw new IllegalArgumentException();
-		
+
 		for (int i = 0; i < wishList.size(); i++) {
-			
+
 			if (wishList.get(i).getName().equals(productName)) {
 				return wishList.remove(i);
 			}
 		}
-						
+
 		return null;
 	}
 
@@ -95,9 +101,9 @@ public class User {
 	public void printWishList(PrintStream printStream){
 		//TODO is this correct?
 		for (int i = 0; i < wishList.size(); i++) {
-			printStream.println(wishList.get(i).toString());
+			printStream.append(wishList.get(i).toString() + "\n");
 		}
-		
+
 	}
 
 	/**
@@ -111,7 +117,7 @@ public class User {
 	 * @throws InsufficientCreditException if price > credit 
 	 */
 	public boolean buy(String productName) throws InsufficientCreditException {
-		
+
 		for (int i = 0; i < wishList.size(); i++) {
 			if (wishList.get(i).equals(productName)) {
 				if (wishList.get(i).getPrice() <= credit) {
@@ -124,8 +130,8 @@ public class User {
 				}
 			}
 		}
-		
-		
+
+
 		return false;
 	}
 
