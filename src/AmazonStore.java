@@ -176,7 +176,7 @@ public class AmazonStore {
 			String s = products.get(i).getCategory();
 			if (!s.equals(tempCate)) {
 				tempCate = s;
-				System.out.println("\n" + tempCate);
+				System.out.println("\n" + tempCate + ":");
 			}
 			tempName = products.get(i).getName();
 			tempPrice = products.get(i).getPrice();
@@ -209,17 +209,17 @@ public class AmazonStore {
 					System.out.println("Invalid Command");
 					continue;
 				}
-				switch(commands[0].charAt(0)){
+				switch(commands[0].charAt(0)) {
 				case 'v':
-					if (commands[1].equals("all")){
+					if (commands[1].equals("all")) {
 						printByCategory();
 					}
-					else if (commands[1].equals("wishlist")){
+					else if (commands[1].equals("wishlist")) {
 						if (currentUser == null) {
 							System.out.println("No user logged in. Log in first.");
 						}
 						currentUser.printWishList(System.out);
-						//TODO call printWishList
+
 					}
 					else if (commands[1].equals("instock")){
 						for (int i = 0; i < inStock.size(); i++){
@@ -248,15 +248,42 @@ public class AmazonStore {
 					break;
 
 				case 'a':
+					if (commands[1] == null) {
+						throw new IllegalArgumentException();
+					}
+
+					String productName = commands[1];
+					boolean added = false;
+					for (int i = 0; i < products.size(); i++) {
+						if (products.get(i).getName().equals(productName)) {
+							currentUser.addToWishList(products.get(i));
+							added = true;
+						}
+					}
+					if (!added) System.out.println("Product not found.");
+
 					break;
 
 				case 'r':
+					if (commands[1] == null) {
+						throw new IllegalArgumentException();
+					}
+					
+					String productName2 = commands[1];
+					if ((currentUser.removeFromWishList(productName2).getName()) == null) {
+						System.out.println("Product not found.");
+						//TODO throws NullPointerException if product not found
+					}
+					
 					break;
 
 				case 'b':
 					break;
 
 				case 'c':
+
+					System.out.println("$" + currentUser.getCredit());
+
 					break;
 
 				case 'l':

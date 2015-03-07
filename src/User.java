@@ -59,17 +59,17 @@ public class User {
 	 * @param product the Product to add
 	 */
 	public void addToWishList(Product product) {
-
+		
 		if (product == null) throw new IllegalArgumentException();
-		if (wishList.contains(product)){
-			for (int i = 0; i < wishList.size(); i++) {
-				if (product.equals(wishList.get(i))){
-					wishList.add(i, product);
-				}
+		
+		boolean added = false;
+		for (int i = 0; i < wishList.size(); i++) {
+			if ((wishList.get(i).getPrice()) <= (product.getPrice())) {
+				wishList.add(i, product);
+				return;
 			}
 		}
 		wishList.add(product);
-
 	}
 
 	/**
