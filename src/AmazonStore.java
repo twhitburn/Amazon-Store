@@ -218,17 +218,33 @@ public class AmazonStore {
 						if (currentUser == null) {
 							System.out.println("No user logged in. Log in first.");
 						}
+						currentUser.printWishList(System.out);
 						//TODO call printWishList
 					}
 					else if (commands[1].equals("instock")){
 						for (int i = 0; i < inStock.size(); i++){
-							
+							System.out.println(inStock.get(i).toString());
 						}
 					}
 					break;
 
 				case 's':
-					
+					if (commands[1] == null) {
+						throw new IllegalArgumentException();
+					}
+					String query = commands[1];
+					for (int i = 0; i < products.size(); i++) {
+						boolean flag1 = false;
+						String[] nameString = products.get(i).getName().split(" ");
+						for (int j = 0; j < nameString.length; j++) {
+							if (nameString[j].equals(query)){
+								flag1 = true;
+							}
+						}
+						if (flag1){
+							System.out.println(products.get(i).toString());
+						}		
+					}
 					break;
 
 				case 'a':

@@ -101,7 +101,7 @@ public class User {
 	public void printWishList(PrintStream printStream){
 		//TODO is this correct?
 		for (int i = 0; i < wishList.size(); i++) {
-			printStream.append(wishList.get(i).toString());
+			printStream.append(wishList.get(i).toString() + "\n");
 		}
 
 	}
