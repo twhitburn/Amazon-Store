@@ -78,10 +78,10 @@ public class User {
 	 * @param product the Product to add
 	 */
 	public void addToWishList(Product product) {
-		
+
 		if (product == null) throw new IllegalArgumentException();
-		
-		boolean added = false;
+
+		//Go to the position where the next item will be cheaper, add there
 		for (int i = 0; i < wishList.size(); i++) {
 			if ((wishList.get(i).getPrice()) <= (product.getPrice())) {
 				wishList.add(i, product);
@@ -119,7 +119,7 @@ public class User {
 	 * wishlist
 	 */
 	public void printWishList(PrintStream printStream){
-		//TODO is this correct?
+
 		for (int i = 0; i < wishList.size(); i++) {
 			printStream.append(wishList.get(i).toString() + "\n");
 		}

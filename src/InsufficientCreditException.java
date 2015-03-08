@@ -27,14 +27,14 @@
  */
 public class InsufficientCreditException extends Exception {
 
-	
+	//Automatically added
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Exception that does nothing when thrown.
 	 */
 	public InsufficientCreditException() {
-		
+
 	}
-	
+
 }
