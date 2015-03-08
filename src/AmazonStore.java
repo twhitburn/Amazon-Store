@@ -1,8 +1,36 @@
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:            Amazon Store
+// Files:            DLinkedList.java, Product.java, User.java, 
+//                   InsufficientCreditException.java,
+// Semester:         CS367 Spring 2015
+//
+// Author:           Thomas Whitburn
+// Email:            twhitburn@wisc.edu
+// CS Login:         whitburn
+// Lecturer's Name:  Jim Skrentny
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ////////////////////
+//
+// Pair Partner:     Haomin Li
+// Email:            hli256@wisc.edu
+// CS Login:         haomin
+// Lecturer's Name:  Jim Skrentny
+//
+//////////////////////////// 80 columns wide //////////////////////////////////
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-
+/**
+ * Main class with menu interface that allows you to login and manipulate the 
+ * store and products.
+ *
+ * <p>Bugs: No known bugs
+ *
+ * @author Thomas Whitburn, Haomin Li
+ */
 public class AmazonStore {
 
 	//Store record of users and products
@@ -14,7 +42,11 @@ public class AmazonStore {
 	public static final Scanner stdin= new Scanner(System.in);
 
 
-	//main method
+	/**
+	 * Main program method that handles all user operations.
+	 *
+	 * @param args command line inputs
+	 */
 	public static void main(String args[]) throws FileNotFoundException {
 
 

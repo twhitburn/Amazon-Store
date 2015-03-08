@@ -1,4 +1,29 @@
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  AmazonStore.java
+// File:             DLinkedList.java
+// Semester:         CS367 Spring 2015
+//
+// Author:           Thomas Whitburn
+// CS Login:         whitburn
+// Lecturer's Name:  Jim Skrentny
+//
+//////////////////// PAIR PROGRAMMERS COMPLETE THIS SECTION ////////////////////
+//
+// Pair Partner:     Haomin Li
+// Email:            hli256@wisc.edu
+// CS Login:         haomin
+// Lecturer's Name:  Jim Skrentny
+//
+//////////////////////////// 80 columns wide //////////////////////////////////
 
+/**
+ * Implements the List ADT using a doubly-linked list.
+ *
+ * <p>Bugs: No known bugs
+ *
+ * @author Thomas Whitburn, Haomin Li
+ */
 public class DLinkedList<E> implements ListADT<E> {
 
 
@@ -6,6 +31,10 @@ public class DLinkedList<E> implements ListADT<E> {
 	private Listnode<E> tail;
 	private int numItems;
 
+	/**
+	 * Constructs an empty doubly-linked list with a head and a tail reference 
+	 * both pointing to null.
+	 */
 	public DLinkedList() {
 		head = null;
 		tail = null;
